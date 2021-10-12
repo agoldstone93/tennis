@@ -91,11 +91,13 @@ namespace TennisTests
             game.PointTo(server);
             game.PointTo(server);
             game.PointTo(server);
-            game.PointTo(server);
 
             game.PointTo(receiver);
             game.PointTo(receiver);
             game.PointTo(receiver);
+
+            game.PointTo(server);
+
             var score = game.Score();
 
             //assert
@@ -121,6 +123,26 @@ namespace TennisTests
 
             game.PointTo(server);
             game.PointTo(receiver);
+            game.PointTo(server);
+            game.PointTo(server);
+
+            var score = game.Score();
+
+            //assert
+            Assert.AreEqual("Game, Player 1", score);
+        }
+
+        [Test]
+        public void FourPointsToRecieverZeroPointsToServer_ScoreIsGame()
+        {
+            //arrange
+            var server = "Player 1";
+            var receiver = "Player 2";
+            var game = new Game(server, receiver);
+
+            //act
+            game.PointTo(server);
+            game.PointTo(server);
             game.PointTo(server);
             game.PointTo(server);
 

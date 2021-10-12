@@ -20,7 +20,11 @@ namespace Tennis
             if (player != server && player != receiver)
                 throw new NullReferenceException("Invalid player name");
 
-            if (player == receiver && serverPoints == 4 && receiverPoints == 3)
+            if (player == server && serverPoints == 3 && receiverPoints < 3)
+                serverPoints = 5;
+            else if (player == receiver && receiverPoints == 3 && serverPoints < 3)
+                receiverPoints = 5;
+            else if (player == receiver && serverPoints == 4 && receiverPoints == 3)
                 serverPoints--;
             else if (player == server && receiverPoints == 4 && serverPoints == 3)
                 receiverPoints--;
