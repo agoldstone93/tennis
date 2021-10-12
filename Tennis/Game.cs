@@ -3,8 +3,8 @@ namespace Tennis
 {
     public class Game
     {
-        string server;
-        string receiver;
+        readonly string server;
+        readonly string receiver;
         int serverPoints = 0;
         int receiverPoints = 0;
         
@@ -21,18 +21,25 @@ namespace Tennis
                 serverPoints++;
             else if (player == receiver)
                 receiverPoints++;
-            else Console.WriteLine("Invalid player name");
+            else
+                throw new NullReferenceException("Invalid player name");
             
         }
 
         public string Score()
         {
             var scoreNames = new string[] { "love", "fifteen", "thirty", "forty" };
-            var result = $"{scoreNames[serverPoints]}, {scoreNames[receiverPoints]}";
+
+            string result;
+            if (serverPoints == 3 && receiverPoints == 3)
+                result = "deuce";
+            else
+                result = $"{scoreNames[serverPoints]}, {scoreNames[receiverPoints]}";
+
             return CapitaliseSentence(result);
         }
 
-        public string CapitaliseSentence(string input)
+        private static string CapitaliseSentence(string input)
         {
             return char.ToUpper(input[0]) + input[1..];
         }

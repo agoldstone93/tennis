@@ -21,7 +21,7 @@ namespace TennisTests
         }
 
         [Test]
-        public void OnePointEach_ScoreIsFifteenAll()
+        public void OnePointEach_ScoreIsFifteenFifteen()
         {
             //arrange
             var server = "Player 1";
@@ -35,6 +35,27 @@ namespace TennisTests
 
             //assert
             Assert.AreEqual(score, "Fifteen, fifteen");
+        }
+
+        [Test]
+        public void ThreePointsEach_ScoreIsDeuce()
+        {
+            //arrange
+            var server = "Player 1";
+            var receiver = "Player 2";
+            var game = new Game(server, receiver);
+
+            //act
+            game.PointTo(server);
+            game.PointTo(server);
+            game.PointTo(server);
+            game.PointTo(receiver);
+            game.PointTo(receiver);
+            game.PointTo(receiver);
+            var score = game.Score();
+
+            //assert
+            Assert.AreEqual(score, "Deuce");
         }
     }
 }
