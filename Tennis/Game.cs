@@ -27,7 +27,14 @@ namespace Tennis
 
         public string Score()
         {
-            return $"{serverPoints} - {receiverPoints}";
+            var scoreNames = new string[] { "love", "fifteen", "thirty", "forty" };
+            var result = $"{scoreNames[serverPoints]}, {scoreNames[receiverPoints]}";
+            return CapitaliseSentence(result);
+        }
+
+        public string CapitaliseSentence(string input)
+        {
+            return char.ToUpper(input[0]) + input[1..];
         }
     }
 }

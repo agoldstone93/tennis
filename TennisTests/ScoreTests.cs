@@ -17,7 +17,7 @@ namespace TennisTests
             var result = game.Score();
 
             //assert
-            Assert.AreEqual(result, "0 - 0");
+            Assert.AreEqual(result, "Love, love");
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace TennisTests
             var score = game.Score();
 
             //assert
-            Assert.AreEqual(score, "1 - 1");
+            Assert.AreEqual(score, "Fifteen, fifteen");
         }
     }
 }
