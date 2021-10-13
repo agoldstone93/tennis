@@ -3,35 +3,35 @@ namespace Tennis
 {
     public class Game
     {
-        readonly string server;
-        readonly string receiver;
-        int serverPoints = 0;
-        int receiverPoints = 0;
-        
+        readonly private Player server;
+        readonly private Player receiver;
 
-        public Game(string server, string receiver)
+        public Game(string serverName, string receiverName)
         {
-            this.server = server;
-            this.receiver = receiver;
+            server = new Player(serverName, 0);
+            receiver = new Player(receiverName, 0);
         }
 
-        public void PointTo(string player)
+        public void PointTo(string playerName)
         {
-            if (player != server && player != receiver)
+            if (playerName != server.Name && playerName != receiver.Name)
                 throw new NullReferenceException("Invalid player name");
 
-            if (player == server && serverPoints == 3 && receiverPoints < 3)
-                serverPoints = 5;
-            else if (player == receiver && receiverPoints == 3 && serverPoints < 3)
-                receiverPoints = 5;
-            else if (player == receiver && serverPoints == 4 && receiverPoints == 3)
-                serverPoints--;
-            else if (player == server && receiverPoints == 4 && serverPoints == 3)
-                receiverPoints--;
-            else if (player == server)
-                serverPoints++;
+            // if game doesnt go to deuce
+            if (playerName == server.Name && server.Points == 3 && receiver.Points < 3)
+                server.Points = 5;
+            else if (playerName == receiver.Name && receiver.Points == 3 && server.Points < 3)
+                receiver.Points = 5;
+            // if game goes to advantage
+            else if (playerName == receiver.Name && server.Points == 4 && receiver.Points == 3)
+                server.Points--;
+            else if (playerName == server.Name && receiver.Points == 4 && server.Points == 3)
+                receiver.Points--;
+            // all other points
+            else if (playerName == server.Name)
+                server.Points++;
             else
-                receiverPoints++;
+                receiver.Points++;
         }
 
         public string Score()
@@ -39,20 +39,23 @@ namespace Tennis
             var scoreNames = new string[] { "love", "fifteen", "thirty", "forty", "advantage", "game" };
 
             string result;
-            if (serverPoints == 3 && receiverPoints == 3)
+            if (server.Points == 3 && receiver.Points == 3)
                 result = "deuce";
-            else if (serverPoints == receiverPoints)
-                result = $"{scoreNames[serverPoints]} all";
-            else if (serverPoints == 4)
-                result = $"advantage, {server}";
-            else if (receiverPoints == 4)
-                result = $"advantage, {receiver}";
-            else if (serverPoints == 5)
-                result = $"game, {server}";
-            else if (receiverPoints == 5)
-                result = $"game, {server}";
+            // convention is to say e.g. 'fifteen all' rather than 'fifteen, fifteen'
+            else if (server.Points == receiver.Points)
+                result = $"{scoreNames[server.Points]} all";
+            // if game goes to advantage
+            else if (server.Points == 4)
+                result = $"advantage, {server.Name}";
+            else if (receiver.Points == 4)
+                result = $"advantage, {receiver.Name}";
+            // if player wins game
+            else if (server.Points == 5)
+                result = $"game, {server.Name}";
+            else if (receiver.Points == 5)
+                result = $"game, {server.Name}";
             else
-                result = $"{scoreNames[serverPoints]}, {scoreNames[receiverPoints]}";
+                result = $"{scoreNames[server.Points]}, {scoreNames[receiver.Points]}";
 
             return CapitaliseSentence(result);
         }
